@@ -11,10 +11,10 @@ class CountingGame < Gosu::Window
 		super(1600,800, false)
         @correct = false
         @cursor = Cursor.new
-        @background = Gosu::Image.new("assets/clouds.jpg",{})
+        @background = Gosu::Image.new("assets/underwater.png",{})
         @amount = rand(0..15)
-        @icons = Array.new 
-        #@icon = @icons[rand(0...@icons.length())]
+        @icons = ["assets/uw1.png","assets/uw2.png", "assets/uw3.png", "assets/uw4.png","assets/uw5.png"]
+        @icon = @icons[rand(0...@icons.length())]
         @display = Array.new
         @icon_locations = Array.new
         while @display.length() < @amount 
@@ -30,7 +30,7 @@ class CountingGame < Gosu::Window
                   end
                 end
                 if !equal
-                  @display.push(Graphic.new(x,y, "assets/star100.png"))
+                  @display.push(Graphic.new(x,y, @icon))
                   @icon_locations.push(location)
                 end
              end
@@ -39,7 +39,7 @@ class CountingGame < Gosu::Window
              y = rand(0..400)
              location = [x,y]
              @icon_locations.push(location)
-             @display.push(Graphic.new(x,y,"assets/star100.png"))
+             @display.push(Graphic.new(x,y,@icon))
           end
         end
         @buttons = Array.new
@@ -72,9 +72,8 @@ class CountingGame < Gosu::Window
     def check_input
       for button in @buttons
           if button.click_on?(@cursor) && @cursor.click && @cursor.reset && (button.value == @amount)
-            @buttons.clear
-            @display.clear
             @correct = true
+            initialize
           end
       end
     end
@@ -90,9 +89,6 @@ class CountingGame < Gosu::Window
      end
     end
     def refresh
-      if  @correct &&(Gosu::button_down? Gosu::KbReturn)
-        initialize
-      end
       if  (Gosu::button_down? Gosu::KbEscape)
         close
       end
