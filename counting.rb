@@ -1,7 +1,7 @@
 require 'gosu/all'
 require_relative "cursor"
 require_relative "graphic"
-require_relative "numberbutton"
+require_relative "button"
 require_relative "number"
 
 
@@ -45,9 +45,9 @@ class CountingGame < Gosu::Window
         @buttons = Array.new
         for i in 0...16
 	        if i <=7
-	          @buttons.push(NumberButton.new(50+(i* 200), 525, "assets/#{i}_100_blue.png", i))
+	          @buttons.push(Button.new(50+(i* 200), 525, "assets/#{i}_100_blue.png", i, "assets/#{i}_100_gold.png"))
 	        else
-	          @buttons.push(NumberButton.new(50+((i-8)*200), 675, "assets/#{i}_100_blue.png", i))
+	          @buttons.push(Button.new(50+((i-8)*200), 675, "assets/#{i}_100_blue.png", i, "assets/#{i}_100_gold.png"))
 	        end
         end
 	end

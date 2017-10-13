@@ -1,9 +1,10 @@
 require_relative "number"
-class NumberButton < Number
-	def initialize(x,y,image, value)
+class Button < Number
+	def initialize(x,y,image, value, click_image)
 		super(x,y,image,value)
 		@image_x = image
 		@clicked_on = false
+		@click = click_image
 	end
 	def click_on?(cursor)
 		if Gosu::distance(@x, @y, cursor.x, cursor.y) < 50 then
@@ -16,10 +17,12 @@ class NumberButton < Number
 	end
 	def clicked_on
 		if (@clicked_on)
-			temp = "assets/#{@value}_100_gold.png"
-			@image = Gosu::Image.new(temp,{})
+			@image = Gosu::Image.new(@click,{})
 		else
 			@image = Gosu::Image.new(@image_x,{})
 		end
+	end
+	def image
+		@image_x
 	end
 end
