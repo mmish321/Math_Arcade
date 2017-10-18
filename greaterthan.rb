@@ -9,9 +9,9 @@ class GreaterThan < Gosu::Window
 	def initialize()
 		super(1600,800,false)
 		@cursor = Cursor.new
-        @background = Gosu::Image.new("assets/underwater.png",{})
+        @background = Gosu::Image.new("assets/bkgr_space.png",{})
         @amount = rand(0..15)
-        @icons = ["assets/uw1.png","assets/uw2.png", "assets/uw3.png", "assets/uw4.png","assets/uw5.png"]        
+        @icons = ["assets/sp1.png","assets/uw2.png", "assets/uw3.png", "assets/uw4.png","assets/uw5.png"]        
         @icon1 = Graphic.new(600,590,@icons[rand(0...@icons.length())])
         @icon2 = Graphic.new(1000,590,@icons[rand(0...@icons.length())])
         while @icon1.image == @icon2.image

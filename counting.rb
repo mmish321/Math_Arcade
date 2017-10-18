@@ -17,6 +17,10 @@ class CountingGame < Gosu::Window
         @icon = @icons[rand(0...@icons.length())]
         @display = Array.new
         @icon_locations = Array.new
+        @bubbles = Gosu::Sample.new("assets/bubbles.wav")
+        @splash = Gosu::Sample.new("assets/splash.wav")
+        @blub = Gosu::Sample.new("assets/blub.wav")
+        @time = Gosu::milliseconds
         while @display.length() < @amount 
           if @display.length() > 0
              x = rand(100..1500)
@@ -56,6 +60,7 @@ class CountingGame < Gosu::Window
       cursor_movement
       check_input
       refresh
+      sound_effects
 	end
 
 	def draw
@@ -64,6 +69,22 @@ class CountingGame < Gosu::Window
 		draw_button
     display_icon
 	end
+    
+    def sound_effects
+      if ((Gosu::milliseconds - @time) % 5000 <= self.update_interval)
+        r = rand(1..2)
+        if r ==1
+          @bubbles.play
+        else 
+          @splash.play
+        end
+      end
+      if ((Gosu::milliseconds - @time) % 8000 <= self.update_interval)
+        @blub.play
+      end
+    end
+
+
     
     def cursor_movement
       @cursor.change_x(mouse_x)

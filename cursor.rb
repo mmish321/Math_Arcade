@@ -5,6 +5,7 @@ class Cursor
 		@y = 0
 		@clickimage = Gosu::Image.new('assets/cursor_click.png', {})
         @switch = 1
+        @click = Gosu::Sample.new("assets/mouse_click.wav")
 	end
     
     def change_x(num)
@@ -21,6 +22,7 @@ class Cursor
             @image = Gosu::Image.new('assets/cursor.png', {})           
         end
         if @switch == 3 then
+            @click.play
             return true
         else
             return false
