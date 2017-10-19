@@ -16,7 +16,7 @@ class Button < Number
 		return @clicked_on
 	end
 	def clicked_on
-		if (@clicked_on)
+		if (@clicked_on) 
 			@image = Gosu::Image.new(@click,{})
 		else
 			@image = Gosu::Image.new(@image_x,{})
