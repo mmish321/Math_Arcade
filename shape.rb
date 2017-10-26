@@ -45,12 +45,11 @@ class Shape < Graphic
 	def move(value)
 		@move = value
 	end
- 	def equal_to(shape)
- 		if shape.color == @color && shape.shape == @shape
- 			return true
- 		else
- 			return false
- 		end
+ 	def change_color(color)
+ 		@color = color
+ 	end
+ 	def change_shape(shape)
+ 		@shape = shape
  	end
 
 end

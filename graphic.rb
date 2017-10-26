@@ -22,5 +22,9 @@ class Graphic
 	def image
 		@image_string
 	end
+	def change_image(image)
+		@image = image 
+		@image_string = image
+	end
 
 end
