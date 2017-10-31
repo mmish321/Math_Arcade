@@ -7,6 +7,9 @@ class Shape < Graphic
 		@clicked_on = false
 		@clicks = 0
 		@move = false
+		@original_x = x
+		@original_y = y
+		@correct = false
 	end
 
 	def color
@@ -45,11 +48,24 @@ class Shape < Graphic
 	def move(value)
 		@move = value
 	end
+	def move?
+		@move
+	end
  	def change_color(color)
  		@color = color
  	end
  	def change_shape(shape)
  		@shape = shape
+ 	end
+ 	def orginal
+ 		@x = @original_x
+ 		@y = @original_y
+ 	end
+ 	def correct_change(value)
+ 		@correct = value
+ 	end
+ 	def correct
+ 		@correct
  	end
 
 end
