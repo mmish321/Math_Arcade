@@ -60,7 +60,7 @@ class MathArcade < Gosu::Window
 
    def check_input
 	   	for game in @games
-	   		if game.click_on?(@cursor) && @cursor.click && @cursor.reset
+	   		if game.x <= @cursor.x && (game.x + 200) >= @cursor.x && game.y <= @cursor.y && (game.y + 200) >= @cursor.y && @cursor.click && @cursor.reset
 	   			if game.value == "Counting"
 	   				choice = CountingGame.new
 	   				choice.show
