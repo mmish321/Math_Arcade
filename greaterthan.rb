@@ -161,5 +161,3 @@ class GreaterThan < Gosu::Window
 
 end
 
-meep = GreaterThan.new
-meep.show

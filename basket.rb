@@ -25,7 +25,7 @@ class Basket < Graphic
 			else
 				shape.orginal
 			end
-		elsif  @type == "square" || @type == "circle" || @type = "star" || @type = "triangle"
+		elsif  @type == "square" || @type == "circle" || @type == "star" || @type == "triangle"
 			if shape.shape == @type
 				@shape_amount += 1
 				shape.correct_change(true)

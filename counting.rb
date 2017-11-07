@@ -111,10 +111,8 @@ class CountingGame < Gosu::Window
     end
     def refresh
       if  (Gosu::button_down? Gosu::KbEscape)
-        close
+        self.close!
       end
    end
 end
 
-meep = CountingGame.new
-meep.show

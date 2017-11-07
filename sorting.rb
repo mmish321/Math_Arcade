@@ -30,10 +30,12 @@ class Sorting < Gosu::Window
 			@shape1 = @shapes[rand(0...@shapes.length)]
 			@shape2 = @shapes[rand(0...@shapes.length)]
 			@shape3 = @shapes[rand(0...@shapes.length)]
-			@color = @colors[rand(0...@colors.length)]
-			@icon1 = Shape.new(0,0,"assets/#{@shape1}_#{@color}.png", @color, @shape1)
-			@icon2 = Shape.new(0,0,"assets/#{@shape2}_#{@color}.png", @color, @shape2)
-			@icon3 = Shape.new(0,0,"assets/#{@shape3}_#{@color}.png", @color, @shape3)
+			@color1 = @colors[rand(0...@colors.length)]
+			@color2 = @colors[rand(0...@colors.length)]
+			@color3 = @colors[rand(0...@colors.length)]
+			@icon1 = Shape.new(0,0,"assets/#{@shape1}_#{@color1}.png", @color1, @shape1)
+			@icon2 = Shape.new(0,0,"assets/#{@shape2}_#{@color2}.png", @color2, @shape2)
+			@icon3 = Shape.new(0,0,"assets/#{@shape3}_#{@color3}.png", @color3, @shape3)
 			while (@icon1.shape == @icon2.shape) || (@icon2.shape == @icon3.shape) || (@icon1.shape == @icon3.shape)
 				if (@icon1.shape == @icon2.shape)
 					if (@icon1.shape == "square")
@@ -69,21 +71,23 @@ class Sorting < Gosu::Window
 					end		
 				end
 			end
-			@icon1.change_image("assets/#{@icon1.shape}_#{@color}.png")
-			@icon2.change_image("assets/#{@icon2.shape}_#{@color}.png")
-			@icon3.change_image("assets/#{@icon3.shape}_#{@color}.png")
-			@baskets.push(Basket.new(0,400, "assets/#{@color}#{@icon1.shape}basket.png", @amount1, @icon1.shape))
-			@baskets.push(Basket.new(550,400, "assets/#{@color}#{@icon2.shape}basket.png", @amount2, @icon2.shape))
-			@baskets.push(Basket.new(1100,400, "assets/#{@color}#{@icon3.shape}basket.png", @amount3, @icon3.shape))
+			@icon1.change_image("assets/#{@icon1.shape}_#{@color1}.png")
+			@icon2.change_image("assets/#{@icon2.shape}_#{@color2}.png")
+			@icon3.change_image("assets/#{@icon3.shape}_#{@color3}.png")
+			@baskets.push(Basket.new(0,400, "assets/#{@color1}#{@icon1.shape}basket.png", @amount1, @icon1.shape))
+			@baskets.push(Basket.new(550,400, "assets/#{@color2}#{@icon2.shape}basket.png", @amount2, @icon2.shape))
+			@baskets.push(Basket.new(1100,400, "assets/#{@color3}#{@icon3.shape}basket.png", @amount3, @icon3.shape))
 		end
 		if @sort == "color"
 				@color1 = @colors[rand(0...@colors.length)]
 				@color2 = @colors[rand(0...@colors.length)]
 				@color3 = @colors[rand(0...@colors.length)]
-				@shape = @shapes[rand(0...@shapes.length)]
-				@icon1 = Shape.new(0,0,"assets/#{@shape}_#{@color1}.png", @color1, @shape)
-				@icon2 = Shape.new(0,0,"assets/#{@shape}_#{@color2}.png", @color2, @shape)
-				@icon3 = Shape.new(0,0,"assets/#{@shape}_#{@color3}.png", @color3, @shape)
+				@shape1 = @shapes[rand(0...@shapes.length)]
+				@shape2 = @shapes[rand(0...@shapes.length)]
+				@shape3 = @shapes[rand(0...@shapes.length)]
+				@icon1 = Shape.new(0,0,"assets/#{@shape1}_#{@color1}.png", @color1, @shape1)
+				@icon2 = Shape.new(0,0,"assets/#{@shape2}_#{@color2}.png", @color2, @shape2)
+				@icon3 = Shape.new(0,0,"assets/#{@shape3}_#{@color3}.png", @color3, @shape3)
 				while (@icon1.color == @icon2.color) || (@icon2.color == @icon3.color) || (@icon1.color == @icon3.color)
 					if (@icon1.color == @icon2.color)
 						if (@icon1.color == "red")
@@ -119,9 +123,9 @@ class Sorting < Gosu::Window
 						end		
 					end
 				end
-				@icon1.change_image("assets/#{@shape}_#{@icon1.color}.png")
-				@icon2.change_image("assets/#{@shape}_#{@icon2.color}.png")
-				@icon3.change_image("assets/#{@shape}_#{@icon3.color}.png")
+				@icon1.change_image("assets/#{@shape1}_#{@icon1.color}.png")
+				@icon2.change_image("assets/#{@shape2}_#{@icon2.color}.png")
+				@icon3.change_image("assets/#{@shape3}_#{@icon3.color}.png")
 				@baskets.push(Basket.new(0,400, "assets/#{@icon1.color}basket.png", @amount1, @icon1.color))
 				@baskets.push(Basket.new(550,400, "assets/#{@icon2.color}basket.png", @amount2, @icon2.color))
 				@baskets.push(Basket.new(1100,400, "assets/#{@icon3.color}basket.png", @amount3, @icon3.color))
@@ -210,10 +214,8 @@ class Sorting < Gosu::Window
    	  for shape in @display
    	  	for basket in @baskets	
    	  		if basket.on_top_of?(shape) && shape.clicks.even?
-   	  			
    	  			basket.check(shape)
    	  			if (shape.correct)
-   	  			
    	  				@display.delete(shape)
    	  			end
    	  		end
@@ -234,6 +236,3 @@ class Sorting < Gosu::Window
    
 
 end
-
-meep = Sorting.new
-meep.show
