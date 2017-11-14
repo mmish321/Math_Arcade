@@ -18,14 +18,14 @@ class Cursor
         else
             if (@switch == 2) then
                 @switch = 3
+                @click.play
             end
-            @image = Gosu::Image.new('assets/cursor.png', {})           
+            @image = Gosu::Image.new('assets/cursor.png', {})       
         end
-        if @switch == 3 then
-            @click.play
-            return true
+        if @switch == 3
+        	return true
         else
-            return false
+        	return false
         end
     end
     def reset

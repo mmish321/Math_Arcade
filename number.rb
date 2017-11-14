@@ -7,4 +7,8 @@ class Number < Graphic
 	def value
 		@value
 	end
+
+	def change_value(x)
+		@value = x
+	end
 end

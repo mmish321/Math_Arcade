@@ -7,11 +7,14 @@ class Graphic
 	end
 
 	def draw
-		@image.draw(@x, @y, 1)
 		@drawn = true
+		@image.draw(@x, @y, 1)
 	end
 	def drawn
 		@drawn
+	end
+	def reset
+		@drawn = false
 	end
 	def x
 		@x
@@ -23,7 +26,7 @@ class Graphic
 		@image_string
 	end
 	def change_image(image)
-		@image = image 
+		@image = Gosu::Image.new(image, {})
 		@image_string = image
 	end
 
