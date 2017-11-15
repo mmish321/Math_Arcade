@@ -25,6 +25,7 @@ class Addition < Gosu::Window
 		@needed_amount = @needed[0]
 		@bubbles = Gosu::Sample.new("assets/bubbles.wav")
 		@draw_answer = false
+		@time = Gosu::milliseconds
 		for i in 0...16
         if i <=7
           @buttons.push(Button.new(435+(i* 150), 525, "assets/#{i}_100_blue.png", i, "assets/#{i}_100_gold.png"))
@@ -54,9 +55,9 @@ class Addition < Gosu::Window
 		@problem[1].draw
 		if @draw_answer 
 			@problem[2].draw
-			if (Gosu::button_down? Gosu::KbReturn) || (Gosu::button_down? Gosu::KbSpace)
-				generate_problem
-			end
+			if ((Gosu::milliseconds - @time) % 2000 <= self.update_interval)
+				generate_problem	
+			end	
 		end
 	end
 
@@ -74,6 +75,7 @@ class Addition < Gosu::Window
     	if @correct == @needed_amount
     		if @needed_amount == 6
     			@buttons.clear
+    			@problem.clear
     		else
     			@needed_amount = @needed[@correct]
     			@correct = 0
