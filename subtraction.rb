@@ -120,5 +120,3 @@ class Subtraction < Gosu::Window
 
 end
 
-meep = Subtraction.new
-meep.show

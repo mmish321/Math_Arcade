@@ -5,6 +5,8 @@ require_relative "button"
 require_relative "sorting"
 require_relative "counting"
 require_relative "greaterthan"
+require_relative "addition"
+require_relative "subtraction"
 
 class MathArcade < Gosu::Window
 
@@ -80,9 +82,17 @@ class MathArcade < Gosu::Window
 	   				initialize
 	   				self.show
 	   			elsif game.value == "Addition"
-	   				puts "merp"
+	   				choice = Addition.new
+	   				choice.show
+	   				self.close!
+	   				initialize
+	   				self.show
 	   			else
-	   				puts "hey"
+	   				choice = Subtraction.new
+	   				choice.show
+	   				self.close!
+	   				initialize
+	   				self.show
 	   			end
 	   		end
 	   end

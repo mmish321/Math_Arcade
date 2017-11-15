@@ -120,5 +120,3 @@ class Addition < Gosu::Window
 
 end
 
-meep = Addition.new
-meep.show
