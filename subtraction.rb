@@ -7,7 +7,7 @@ require_relative "graphic"
 class Subtraction < Gosu::Window
 	def initialize()
 		super(1600,800,false)
-		@cursor = Cursor.new
+		@cursor = Cursor.new("assets/cursor.png", "assets/cursor_click.png")
 		@background = Gosu::Image.new("assets/subtractionbackground.png", {})
 		@mascot = Graphic.new(0,0,"assets/subtraction_mascot.png")
 		@basket = Graphic.new(400,0,"assets/icebasketempty.png")

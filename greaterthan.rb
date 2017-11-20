@@ -8,10 +8,10 @@ require_relative "number"
 class GreaterThan < Gosu::Window
 	def initialize()
 		super(1600,800,false)
-		@cursor = Cursor.new
+		    @cursor = Cursor.new("assets/white_cursor.png", "assets/cursor_click.png")
         @background = Gosu::Image.new("assets/bkgr_space.png",{})
         @amount = rand(0..15)
-        @icons = ["assets/sp1.png","assets/uw2.png", "assets/uw3.png", "assets/uw4.png","assets/uw5.png"]        
+        @icons = ["assets/space1.png","assets/space2.png", "assets/space3.png", "assets/space4.png","assets/space5.png"]        
         @icon1 = Graphic.new(600,590,@icons[rand(0...@icons.length())])
         @icon2 = Graphic.new(1000,590,@icons[rand(0...@icons.length())])
         while @icon1.image == @icon2.image
@@ -19,14 +19,14 @@ class GreaterThan < Gosu::Window
         	 @icon2 = Graphic.new(1000,550,@icons[rand(0...@icons.length())])
         end
         @dashes = Array.new
-        for i in 0...11
-        	@dashes.push(Graphic.new(0 + (i *150),480, "assets/dash1.png"))
+        for i in 0...16
+        	@dashes.push(Graphic.new(0 + (i *100),480, "assets/white_dash.png"))
         end
         @dashes.push(Graphic.new(780,600, "assets/dash1.png"))
         @buttons = Array.new
-        @buttons.push(Button.new(400,700,"assets/1_100_blue.png", "greater","assets/1_100_gold.png"))
-        @buttons.push(Button.new(800,700, "assets/2_100_blue.png", "less", "assets/2_100_gold.png"))
-        @buttons.push(Button.new(1200,700, "assets/3_100_blue.png", "equal", "assets/3_100_gold.png"))
+        @buttons.push(Button.new(400,680,"assets/greater_than_button.png", "greater","assets/graterthan.png"))
+        @buttons.push(Button.new(1200,680, "assets/less_than_button.png", "less", "assets/lessthan.png"))
+        @buttons.push(Button.new(800,680, "assets/equal_button.png", "equal", "assets/equal_sign.png"))
         @amount1 = rand(1..9)
         @amount2 = rand(1..9)
         @equal = (@amount1 == @amount2)
@@ -122,7 +122,7 @@ class GreaterThan < Gosu::Window
     	end
     	for button in @buttons
     		if button.click_on?(@cursor) && @cursor.click && @cursor.reset 
-    			@chosen.push(Graphic.new(800,560,button.image))
+    			@chosen.push(Graphic.new(800,590,button.click_image))
     			if button.value == @answer
     				@correct = true
     			elsif button.value != @answer
@@ -157,7 +157,7 @@ class GreaterThan < Gosu::Window
 	      icon.draw
 	     end
     end
-   
-
 end
 
+meep = GreaterThan.new
+meep.show

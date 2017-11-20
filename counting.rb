@@ -10,7 +10,7 @@ class CountingGame < Gosu::Window
 	def initialize()
 		super(1600,800, false)
         @correct = false
-        @cursor = Cursor.new
+        @cursor = Cursor.new("assets/cursor.png", "assets/cursor_click.png")
         @background = Gosu::Image.new("assets/underwater.png",{})
         @amount = rand(0..15)
         @icons = ["assets/uw1.png","assets/uw2.png", "assets/uw3.png", "assets/uw4.png","assets/uw5.png"]

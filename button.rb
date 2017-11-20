@@ -25,4 +25,7 @@ class Button < Number
 	def image
 		@image_x
 	end
+	def click_image
+		@click
+	end
 end

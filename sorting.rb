@@ -11,7 +11,7 @@ class Sorting < Gosu::Window
 	def initialize()
 		 @time = Gosu::milliseconds
 		super(1600,800,false)
-		@cursor = Cursor.new
+		@cursor = Cursor.new("assets/cursor.png", "assets/cursor_click.png")
 		r = rand(1..2)
 		if r == 1
 			@sort = "color"

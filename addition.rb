@@ -7,7 +7,7 @@ require_relative "graphic"
 class Addition < Gosu::Window
 	def initialize()
 		super(1600,800,false)
-		@cursor = Cursor.new
+		@cursor = Cursor.new("assets/cursor.png", "assets/cursor_click.png")
 		@background = Gosu::Image.new("assets/additionbackground.png", {})
 		@mascot = Graphic.new(0,0,"assets/addition_mascot.png")
 		@basket = Graphic.new(400,0,"assets/emptybasket.png")
