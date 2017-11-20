@@ -18,7 +18,7 @@ class Basket < Graphic
 	end
 
 	def check(shape)
-		if @type == "blue" || @type =="red" || @type == "green" || @type == "purple"
+		if @type == "blue" || @type =="red" || @type == "green" || @type == "gold"
 			if shape.color == @type
 				@shape_amount += 1
 				shape.correct_change(true)

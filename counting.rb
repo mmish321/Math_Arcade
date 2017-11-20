@@ -17,9 +17,9 @@ class CountingGame < Gosu::Window
         @icon = @icons[rand(0...@icons.length())]
         @display = Array.new
         @icon_locations = Array.new
-        @bubbles = Gosu::Sample.new("assets/bubbles.wav")
-        @splash = Gosu::Sample.new("assets/splash.wav")
-        @blub = Gosu::Sample.new("assets/blub.wav")
+        @bubbles = Gosu::Song.new("assets/bubbles.wav")
+        @splash = Gosu::Song.new("assets/splash.wav")
+        @blub = Gosu::Song.new("assets/blub.wav")
         @time = Gosu::milliseconds
         while @display.length() < @amount 
           if @display.length() > 0
@@ -94,7 +94,7 @@ class CountingGame < Gosu::Window
       for button in @buttons
           if button.click_on?(@cursor) && @cursor.click && @cursor.reset && (button.value == @amount)
             @correct = true
-            initialize
+            reset
           end
       end
     end
@@ -111,8 +111,45 @@ class CountingGame < Gosu::Window
     end
     def refresh
       if  (Gosu::button_down? Gosu::KbEscape)
-        self.close!
+        close
       end
    end
+   def reset
+    @icon = @icons[rand(0...@icons.length())]
+    @amount = rand(0..15)
+    @display.clear
+    @icon_locations.clear
+    while @display.length() < @amount 
+          if @display.length() > 0
+             x = rand(100..1500)
+             y = rand(0..400)
+             location = [x,y]
+             if !@icon_locations.include?(location) then
+                equal = false
+                for i in 0...@icon_locations.length()
+                  if (@icon_locations[i][0] - x).abs < 100 && (@icon_locations[i][1] - y).abs < 100
+                    equal = true
+                  end
+                end
+                if !equal
+                  @display.push(Graphic.new(x,y, @icon))
+                  @icon_locations.push(location)
+                end
+             end
+          else
+             x = rand(0..1500)
+             y = rand(0..400)
+             location = [x,y]
+             @icon_locations.push(location)
+             @display.push(Graphic.new(x,y,@icon))
+          end
+        end
+   end
+   def close
+    @bubbles.stop
+    @splash.stop
+    @blub.stop
+      close!
+    end
 end
 

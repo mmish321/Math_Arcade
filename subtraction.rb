@@ -8,9 +8,9 @@ class Subtraction < Gosu::Window
 	def initialize()
 		super(1600,800,false)
 		@cursor = Cursor.new
-		@background = Gosu::Image.new("assets/underwater.png", {})
-		@mascot = Graphic.new(0,0,"assets/mascot.jpg")
-		@basket = Graphic.new(400,0,"assets/carrot_basket.png")
+		@background = Gosu::Image.new("assets/subtractionbackground.png", {})
+		@mascot = Graphic.new(0,0,"assets/subtraction_mascot.png")
+		@basket = Graphic.new(400,0,"assets/icebasketempty.png")
 		@buttons = Array.new
 		@subtraction_sign = Graphic.new(1000,140,"assets/subtraction_sign.png")
 		@dash = Graphic.new(1400,180,"assets/dash1.png")
@@ -33,6 +33,7 @@ class Subtraction < Gosu::Window
           @buttons.push(Button.new(435+((i-8)*150), 675, "assets/#{i}_100_blue.png", i,"assets/#{i}_100_gold.png"))
         end
       end
+      @draw_problem = true
 	end
 
 	def update
@@ -48,14 +49,16 @@ class Subtraction < Gosu::Window
 		@mascot.draw
 		@basket.draw
 		draw_button
-		@subtraction_sign.draw
-		@dash.draw
-		@equal_sign.draw
-		@problem[0].draw
-		@problem[1].draw
-		if @draw_answer 
+		if @draw_problem
+			@subtraction_sign.draw
+			@dash.draw
+			@equal_sign.draw
+			@problem[0].draw
+			@problem[1].draw
+		end
+		if @draw_answer && @draw_problem
 			@problem[2].draw
-			if ((Gosu::milliseconds - @time) % 2000 <= self.update_interval)
+			if ((Gosu::milliseconds - @time) % 1000 <= self.update_interval)
 				generate_problem	
 			end	
 		end
@@ -71,12 +74,16 @@ class Subtraction < Gosu::Window
           button.draw
         end
     end
-    def check_progress
+   def check_progress
     	if @correct == @needed_amount
     		if @needed_amount == 6
+    			@draw_problem = false
+    			@basket.change_image("assets/icebasket6.png")
     			@buttons.clear
     			@problem.clear
+    			@mascot.change_image("assets/subtraction_mascot_happy.png")
     		else
+    			@basket.change_image("assets/icebasket#{@correct}.png")
     			@needed_amount = @needed[@correct]
     			@correct = 0
     		end
@@ -120,3 +127,5 @@ class Subtraction < Gosu::Window
 
 end
 
+meep =  Subtraction.new
+meep.show

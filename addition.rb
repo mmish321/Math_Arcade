@@ -1,4 +1,4 @@
-require 'gosu/all'
+require 'gosu'
 require_relative "cursor"
 require_relative "button"
 require_relative "number"
@@ -8,9 +8,9 @@ class Addition < Gosu::Window
 	def initialize()
 		super(1600,800,false)
 		@cursor = Cursor.new
-		@background = Gosu::Image.new("assets/underwater.png", {})
-		@mascot = Graphic.new(0,0,"assets/mascot.jpg")
-		@basket = Graphic.new(400,0,"assets/carrot_basket.png")
+		@background = Gosu::Image.new("assets/additionbackground.png", {})
+		@mascot = Graphic.new(0,0,"assets/addition_mascot.png")
+		@basket = Graphic.new(400,0,"assets/emptybasket.png")
 		@buttons = Array.new
 		@addition_sign = Graphic.new(1000,140,"assets/addition_sign.png")
 		@dash = Graphic.new(1400,180,"assets/dash1.png")
@@ -33,6 +33,7 @@ class Addition < Gosu::Window
           @buttons.push(Button.new(435+((i-8)*150), 675, "assets/#{i}_100_blue.png", i,"assets/#{i}_100_gold.png"))
         end
       end
+      @draw_problem = true
 	end
 
 	def update
@@ -47,15 +48,17 @@ class Addition < Gosu::Window
 		@background.draw(0,0,0)
 		@mascot.draw
 		@basket.draw
-		draw_button
-		@addition_sign.draw
-		@dash.draw
-		@equal_sign.draw
-		@problem[0].draw
-		@problem[1].draw
-		if @draw_answer 
+		draw_button	
+		if @draw_problem
+			@problem[0].draw
+			@problem[1].draw
+			@addition_sign.draw
+			@dash.draw
+			@equal_sign.draw
+		end
+		if @draw_answer && @draw_problem
 			@problem[2].draw
-			if ((Gosu::milliseconds - @time) % 2000 <= self.update_interval)
+			if ((Gosu::milliseconds - @time) % 1000 <= self.update_interval)
 				generate_problem	
 			end	
 		end
@@ -74,9 +77,13 @@ class Addition < Gosu::Window
     def check_progress
     	if @correct == @needed_amount
     		if @needed_amount == 6
+    			@draw_problem = false
+    			@basket.change_image("assets/carrot_basket6.png")
     			@buttons.clear
     			@problem.clear
+    			@mascot.change_image("assets/addition_mascot_happy.png")
     		else
+    			@basket.change_image("assets/carrot_basket#{@correct}.png")
     			@needed_amount = @needed[@correct]
     			@correct = 0
     		end
@@ -119,4 +126,6 @@ class Addition < Gosu::Window
    end
 
 end
+meep = Addition.new
+meep.show
 
