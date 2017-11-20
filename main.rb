@@ -14,7 +14,7 @@ class MathArcade < Gosu::Window
 		super(1600,800,false)
 		@background = Gosu::Image.new("assets/arcadebackground.png",{})
 		self.caption = "Math Arcade"
-		@cursor = Cursor.new
+		@cursor = Cursor.new("assets/cursor.png", "assets/cursor_click.png")
 		@games = Array.new
 		@games.push(Button.new(600,0,"assets/counting.png","Counting", "assets/counting.png"))
 		@games.push(Button.new(950,0, "assets/greaterthan.png", "GreaterThan", "assets/greaterthan.png"))
