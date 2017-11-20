@@ -20,12 +20,13 @@ class Sorting < Gosu::Window
 		end
 		@background = Gosu::Image.new("assets/forest.png",{})
 		@shapes = ["square", "circle", "triangle", "star"]
-		@colors = ["red", "purple", "green", "blue"]
+		@colors = ["red", "gold", "green", "blue"]
 		@baskets = Array.new
 		@amount1 = rand(1..8)
 		@amount2 = rand(1..8)
 		@amount3 = rand(1..8)
-		@birds = Gosu::Sample.new("assets/Spring Birds.wav")
+		@birds = Gosu::Song.new("assets/Spring Birds.wav")
+		@birds.play
 		if @sort == "shape"
 			@shape1 = @shapes[rand(0...@shapes.length)]
 			@shape2 = @shapes[rand(0...@shapes.length)]
@@ -91,8 +92,8 @@ class Sorting < Gosu::Window
 				while (@icon1.color == @icon2.color) || (@icon2.color == @icon3.color) || (@icon1.color == @icon3.color)
 					if (@icon1.color == @icon2.color)
 						if (@icon1.color == "red")
-							@icon2.change_color("purple")
-						elsif (@icon1.color == "purple")
+							@icon2.change_color("gold")
+						elsif (@icon1.color == "gold")
 							@icon2.change_color("green")
 						elsif (@icon1.color == "green")
 							@icon2.change_color("blue")
@@ -102,8 +103,8 @@ class Sorting < Gosu::Window
 					end
 					if (@icon2.color == @icon3.color)
 						if (@icon2.color == "red")
-							@icon3.change_color("purple")
-						elsif (@icon2.color == "purple")
+							@icon3.change_color("gold")
+						elsif (@icon2.color == "gold")
 							@icon3.change_color("green")
 						elsif (@icon2.color == "green")
 							@icon3.change_color("blue")
@@ -113,9 +114,9 @@ class Sorting < Gosu::Window
 					end
 					if (@icon1.color == @icon3.color)
 						if (@icon1.color == "red")
-							@icon3.change_color("purple")
-						elsif (@icon1.color == "purple")
-							@icon3.change_color("green")
+							@icon3.change_color("gold")
+						elsif (@icon1.color == "gold")
+							@icon3.change_color("green")s
 						elsif (@icon1.color == "green")
 							@icon3.change_color("blue")
 						else
@@ -171,7 +172,6 @@ class Sorting < Gosu::Window
 	def update
 		cursor_movement
 		refresh	
-		sound_effects
 		for shape in @display
 			shape.run(@cursor)
 		end
@@ -207,6 +207,7 @@ class Sorting < Gosu::Window
 
     def refresh
       if  (Gosu::button_down? Gosu::KbEscape)
+      	@birds.stop
         close
       end
    end
@@ -224,15 +225,11 @@ class Sorting < Gosu::Window
    end
    def won?
      if @baskets[1].full? && @baskets[0].full? && @baskets[2]. full?
+     	@birds.stop
      	initialize
      end
    end
-   def sound_effects
-      if ((Gosu::milliseconds - @time) % 5000 <= self.update_interval)
-       @birds.play
-      end
-      
-    end
    
 
 end
+
