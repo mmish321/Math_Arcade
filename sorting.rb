@@ -26,7 +26,7 @@ class Sorting < Gosu::Window
 		@amount2 = rand(1..8)
 		@amount3 = rand(1..8)
 		@birds = Gosu::Song.new("assets/Spring Birds.wav")
-		@birds.play()
+		@birds.play(looping = true)
 		if @sort == "shape"
 			@shape1 = @shapes[rand(0...@shapes.length)]
 			@shape2 = @shapes[rand(0...@shapes.length)]
