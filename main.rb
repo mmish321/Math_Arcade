@@ -1,4 +1,4 @@
-require "gosu/all"
+require "gosu"
 require_relative "cursor"
 require_relative "graphic"
 require_relative "button"
