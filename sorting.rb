@@ -27,6 +27,7 @@ class Sorting < Gosu::Window
 		@amount3 = rand(1..8)
 		@birds = Gosu::Song.new("assets/Spring Birds.wav")
 		@birds.play(looping = true)
+		@thunk = Gosu::Sample.new("assets/thunk.wav")
 		if @sort == "shape"
 			@shape1 = @shapes[rand(0...@shapes.length)]
 			@shape2 = @shapes[rand(0...@shapes.length)]
@@ -207,7 +208,6 @@ class Sorting < Gosu::Window
 
     def refresh
       if  (Gosu::button_down? Gosu::KbEscape)
-    
         close
       end
    end
@@ -217,6 +217,7 @@ class Sorting < Gosu::Window
    	  		if basket.on_top_of?(shape) && shape.clicks.even?
    	  			basket.check(shape)
    	  			if (shape.correct)
+   	  				@thunk.play
    	  				@display.delete(shape)
    	  			end
    	  		end

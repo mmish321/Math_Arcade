@@ -24,6 +24,11 @@ class Subtraction < Gosu::Window
 		@needed = [1,2,3,4,5,6]
 		@needed_amount = @needed[0]
 		@bubbles = Gosu::Sample.new("assets/bubbles.wav")
+		@ice_cone = Gosu::Sample.new("assets/ice_thunk.wav")
+		@icy_wind = Gosu::Song.new("assets/cold_wind.mp3")
+		@splash = Gosu::Sample.new("assets/splash.wav")
+		@icy_wind.play(looping = true)
+		@yay = Gosu::Sample.new("assets/yay.wav")
 		@draw_answer = false
 		@time = Gosu::milliseconds
 		for i in 0...16
@@ -34,9 +39,11 @@ class Subtraction < Gosu::Window
         end
       end
       @draw_problem = true
+      @refresh = false
 	end
 
 	def update
+		sound_effects
 		cursor_movement
 		check_progress
 		check_input
@@ -77,15 +84,24 @@ class Subtraction < Gosu::Window
    def check_progress
     	if @correct == @needed_amount
     		if @needed_amount == 6
+    			@yay.play
+    			@correct = 0
+    			@refresh = true
     			@draw_problem = false
     			@basket.change_image("assets/icebasket6.png")
     			@buttons.clear
     			@problem.clear
-    			@mascot.change_image("assets/subtraction_mascot_happy.png")
+    			@mascot.change_image("assets/subtraction_mascot_happy.png")	
     		else
+    			@ice_cone.play
     			@basket.change_image("assets/icebasket#{@correct}.png")
     			@needed_amount = @needed[@correct]
     			@correct = 0
+    		end
+    	end
+    	if @refresh
+    		if ((Gosu::milliseconds - @time) % 2000 <= self.update_interval)
+                    reset
     		end
     	end
     end
@@ -121,9 +137,44 @@ class Subtraction < Gosu::Window
 
     def refresh
       if  (Gosu::button_down? Gosu::KbEscape)
-        self.close!
+      	@icy_wind.stop
+        close!
       end
    end
+   def sound_effects
+      if ((Gosu::milliseconds - @time) % 5000 <= self.update_interval)
+        r = rand(1..2)
+        if r ==1
+          @splash.play
+        else 
+          @bubbles.play
+        end
+      end
+    end
+     def close
+		@icy_wind.stop
+        close!
+    end
+    def reset
+		@mascot = Graphic.new(0,0,"assets/subtraction_mascot.png")
+		@basket = Graphic.new(400,0,"assets/icebasketempty.png")
+		@used_problems.clear
+		r = rand(1..15)
+		s = rand(0..r)	
+		@problem = [Number.new(850,140,"assets/#{r}_blue_plain.png",r),  Number.new(1125,140,"assets/#{s}_blue_plain.png",s), Number.new(1425,140, "assets/#{r-s}_blue_plain.png",(r-s))]
+		@used_problems.push(@problem)
+		@needed_amount = @needed[0]
+		@draw_answer = false
+		for i in 0...16
+        if i <=7
+          @buttons.push(Button.new(435+(i* 150), 525, "assets/#{i}_100_blue.png", i, "assets/#{i}_100_gold.png"))
+        else
+          @buttons.push(Button.new(435+((i-8)*150), 675, "assets/#{i}_100_blue.png", i,"assets/#{i}_100_gold.png"))
+        end
+      end
+      @draw_problem = true
+      @refresh = false
+    end
 
 end
 

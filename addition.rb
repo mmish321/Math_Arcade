@@ -23,9 +23,12 @@ class Addition < Gosu::Window
 		@correct = 0
 		@needed = [1,2,3,4,5,6]
 		@needed_amount = @needed[0]
-		@bubbles = Gosu::Sample.new("assets/bubbles.wav")
 		@draw_answer = false
 		@time = Gosu::milliseconds
+		@yay = Gosu::Sample.new("assets/yay.wav")
+		@thunk = Gosu::Sample.new("assets/thunk.wav")
+		@farm = Gosu::Song.new("assets/farm.flac")
+		@farm.play(looping = true)
 		for i in 0...16
         if i <=7
           @buttons.push(Button.new(435+(i* 150), 525, "assets/#{i}_100_blue.png", i, "assets/#{i}_100_gold.png"))
@@ -34,6 +37,7 @@ class Addition < Gosu::Window
         end
       end
       @draw_problem = true
+      @refresh = false
 	end
 
 	def update
@@ -77,15 +81,24 @@ class Addition < Gosu::Window
     def check_progress
     	if @correct == @needed_amount
     		if @needed_amount == 6
+    			@yay.play
+    			@correct = 0
+    			@refresh = true
     			@draw_problem = false
     			@basket.change_image("assets/carrot_basket6.png")
     			@buttons.clear
     			@problem.clear
     			@mascot.change_image("assets/addition_mascot_happy.png")
     		else
+    			@thunk.play
     			@basket.change_image("assets/carrot_basket#{@correct}.png")
     			@needed_amount = @needed[@correct]
     			@correct = 0
+    		end
+    	end
+    	if @refresh
+    		if ((Gosu::milliseconds - @time) % 3000 <= self.update_interval)
+                    reset
     		end
     	end
     end
@@ -121,8 +134,32 @@ class Addition < Gosu::Window
 
     def refresh
       if  (Gosu::button_down? Gosu::KbEscape)
-        self.close!
+        close
       end
+   end
+   def reset
+		@mascot = Graphic.new(0,0,"assets/addition_mascot.png")
+		@basket = Graphic.new(400,0,"assets/emptybasket.png")
+		@used_problems.clear
+		r = rand(0..7)
+		s = rand(r..(15-r))	
+		@problem = [Number.new(850,140,"assets/#{r}_blue_plain.png",r),  Number.new(1125,140,"assets/#{s}_blue_plain.png",s), Number.new(1425,140, "assets/#{r+s}_blue_plain.png",(r+s))]
+		@used_problems.push(@problem)
+		@needed_amount = @needed[0]
+		@draw_answer = false
+		for i in 0...16
+        if i <=7
+          @buttons.push(Button.new(435+(i* 150), 525, "assets/#{i}_100_blue.png", i, "assets/#{i}_100_gold.png"))
+        else
+          @buttons.push(Button.new(435+((i-8)*150), 675, "assets/#{i}_100_blue.png", i,"assets/#{i}_100_gold.png"))
+        end
+      end
+      @draw_problem = true
+      @refresh = false
+   end
+   def close
+   	@farm.stop
+   	close!
    end
 
 end

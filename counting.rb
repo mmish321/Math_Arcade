@@ -17,9 +17,11 @@ class CountingGame < Gosu::Window
         @icon = @icons[rand(0...@icons.length())]
         @display = Array.new
         @icon_locations = Array.new
-        @bubbles = Gosu::Song.new("assets/bubbles.wav")
-        @splash = Gosu::Song.new("assets/splash.wav")
-        @blub = Gosu::Song.new("assets/blub.wav")
+        @bubbles = Gosu::Sample.new("assets/bubbles.wav")
+        @splash = Gosu::Sample.new("assets/splash.wav")
+        @blub = Gosu::Sample.new("assets/blub.wav")
+        @waves = Gosu::Song.new("assets/underwater.wav")
+        @waves.play(looping = true)
         @time = Gosu::milliseconds
         while @display.length() < @amount 
           if @display.length() > 0
@@ -146,9 +148,7 @@ class CountingGame < Gosu::Window
         end
    end
    def close
-    @bubbles.stop
-    @splash.stop
-    @blub.stop
+    @waves.stop
       close!
     end
 end

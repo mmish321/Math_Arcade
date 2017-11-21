@@ -8,9 +8,9 @@ require_relative "number"
 class GreaterThan < Gosu::Window
 	def initialize()
 		super(1600,800,false)
+        @time = Gosu::milliseconds
 		    @cursor = Cursor.new("assets/white_cursor.png", "assets/cursor_click.png")
         @background = Gosu::Image.new("assets/bkgr_space.png",{})
-        @amount = rand(0..15)
         @icons = ["assets/space1.png","assets/space2.png", "assets/space3.png", "assets/space4.png","assets/space5.png"]        
         @icon1 = Graphic.new(600,590,@icons[rand(0...@icons.length())])
         @icon2 = Graphic.new(1000,590,@icons[rand(0...@icons.length())])
@@ -93,9 +93,15 @@ class GreaterThan < Gosu::Window
         end
         @chosen = Array.new
         @correct = false
+        @space = Gosu::Song.new("assets/outerspace.wav")
+        @space.play(looping = true)
+        @star = Gosu::Sample.new("assets/shooting_star.ogg")
+        @star_dust = Gosu::Sample.new("assets/star_dust.wav")
+        @swoosh = Gosu::Sample.new("assets/swoosh.wav")
     end
 
     def update
+      sound_effects
       cursor_movement
       check_input
       refresh
@@ -115,7 +121,7 @@ class GreaterThan < Gosu::Window
 	end
     def check_input
     	if @correct
-    		initialize
+    		reset
     	end
     	if !@correct
     		@chosen.clear
@@ -142,6 +148,18 @@ class GreaterThan < Gosu::Window
         close
       end
    end
+    def sound_effects
+      if ((Gosu::milliseconds - @time) % 5000 <= self.update_interval)
+        r = rand(1..3)
+        if r ==1
+          @swoosh.play
+        elsif r ==2
+          @star_dust.play
+        else
+          @star.play
+        end
+      end
+    end
    def draw_button
         for button in @buttons
           button.draw
@@ -156,6 +174,84 @@ class GreaterThan < Gosu::Window
 	     for icon in @display
 	      icon.draw
 	     end
+    end
+    def close
+      @space.stop
+      close!
+    end
+    def reset     
+        @icon1 = Graphic.new(600,590,@icons[rand(0...@icons.length())])
+        @icon2 = Graphic.new(1000,590,@icons[rand(0...@icons.length())])
+        while @icon1.image == @icon2.image
+           @icon1 = Graphic.new(600,550,@icons[rand(0...@icons.length())])
+           @icon2 = Graphic.new(1000,550,@icons[rand(0...@icons.length())])
+        end
+        @amount1 = rand(1..9)
+        @amount2 = rand(1..9)
+        @equal = (@amount1 == @amount2)
+        @greater = (@amount1 > @amount2 )
+        if @greater
+          @answer = "greater"
+        elsif @equal
+          @answer = "equal"
+        else
+          @answer = "less"
+        end
+        @icon_locations.clear
+        @display.clear
+         while @display.length() < @amount1 
+          if @display.length() > 0
+             x = rand(0..700)
+             y = rand(0..350)
+             location = [x,y]
+             if !@icon_locations.include?(location) then
+                equal = false
+                for i in 0...@icon_locations.length()
+                  if (@icon_locations[i][0] - x).abs < 120 && (@icon_locations[i][1] - y).abs < 100
+                    equal = true
+                  end
+                end
+                if !equal
+                  @display.push(Graphic.new(x,y, @icon1.image))
+                  @icon_locations.push(location)
+                end
+             end
+          else
+             x = rand(0..700)
+             y = rand(0..350)
+             location = [x,y]
+             @icon_locations.push(location)
+             @display.push(Graphic.new(x,y,@icon1.image))
+          end
+        end
+        @icon_locations.clear
+        while @display.length() < @amount2 + @amount1
+          if @display.length() > 0
+             x = rand(850..1500)
+             y = rand(0..400)
+             location = [x,y]
+             if !@icon_locations.include?(location) then
+                equal = false
+                for i in 0...@icon_locations.length()
+                  if (@icon_locations[i][0] - x).abs < 120 && (@icon_locations[i][1] - y).abs < 100
+                    equal = true
+                  end
+                end
+                if !equal
+                  @display.push(Graphic.new(x,y, @icon2.image))
+                  @icon_locations.push(location)
+                end
+             end
+          else
+             x = rand(850..1500)
+             y = rand(0..400)
+             location = [x,y]
+             @icon_locations.push(location)
+             @display.push(Graphic.new(x,y,@icon2.image))
+          end
+        end
+        @chosen.clear
+        @correct = false
     end
 end
 
