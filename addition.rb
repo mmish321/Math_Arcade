@@ -97,7 +97,7 @@ class Addition < Gosu::Window
     		end
     	end
     	if @refresh
-    		if ((Gosu::milliseconds - @time) % 3000 <= self.update_interval)
+    		if ((Gosu::milliseconds - @time) % 6000 <= self.update_interval)
                     reset
     		end
     	end

@@ -51,7 +51,7 @@ class MathArcade < Gosu::Window
         	close!
       end
    end
-
+  
    def draw_font
    	@font.draw("Counting",650,200,1,1,1,0xff_3B5998)
    	@font.draw("Greater Than?",985,200,1,1,1,0xff_808080)
